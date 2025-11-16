@@ -461,7 +461,14 @@ git push -u origin main
 - Создайте токен: GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
 - Или используйте GitHub CLI: `gh auth login`
 
----
+---<img width="1876" height="913" alt="Снимок экрана 2025-11-16 135650" src="https://github.com/user-attachments/assets/8a9bceb9-3148-472b-900e-cba047bff445" />
+<img width="1862" height="902" alt="Снимок экрана 2025-11-16 135717" src="https://github.com/user-attachments/assets/e79dba30-8186-4b06-8f2f-f43ab925f30b" />
+<img width="1872" height="917" alt="Снимок экрана 2025-11-16 135814" src="https://github.com/user-attachments/assets/02257bd9-7268-493f-b992-18d0e16dec52" />
+<img width="1887" height="908" alt="Снимок экрана 2025-11-16 135746" src="https://github.com/user-attachments/assets/69d31ff0-ffd7-4967-8e91-441caea895f1" />
+
+
+
+
 
 **Приятного использования RouteFest! 🎪✨**
 
