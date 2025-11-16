@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RouteFest — Генератор идеального дня на фестивале</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 🔥 КРАСИВАЯ ШАПКА -->
+  <header class="hero-header">
+    <div class="header-content">
+      <div class="logo">
+        <span class="logo-icon">🎪</span>
+        <h1>RouteFest</h1>
+      </div>
+      <p class="tagline">Создай свой идеальный день на фестивале — без стресса, с магией!</p>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">
+      <span class="theme-icon">🌙</span>
+    </button>
+    <div class="header-bg"></div>
+  </header>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <div class="container">
+    <!-- КНОПКИ ПЕРЕКЛЮЧЕНИЯ -->
+    <div class="scenario-buttons">
+      <button id="switch-to-scenario1">🎯 Индивидуальный</button>
+      <button id="switch-to-scenario2">👥 Групповой</button>
+      <button id="switch-to-scenario3">🔄 Корректировка</button>
+    </div>
+
+    <!-- СЦЕНАРИЙ 1 -->
+    <div id="scenario1" class="section">
+      <h2>🎯 Индивидуальное планирование</h2>
+      <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: 24px;">
+        Выбери события, которые хочешь посетить — система сгенерирует несколько вариантов маршрутов.
+      </p>
+      
+      <!-- Фильтры и поиск -->
+      <div class="filters-section">
+        <div class="search-wrapper">
+          <input type="text" id="search-input-1" class="search-input" placeholder="🔍 Поиск по названию события..." />
+        </div>
+        <div class="filters-row">
+          <div class="time-filters">
+            <button class="time-filter-btn active" data-time="all">Все</button>
+            <button class="time-filter-btn" data-time="morning">🌅 Утро</button>
+            <button class="time-filter-btn" data-time="day">☀️ День</button>
+            <button class="time-filter-btn" data-time="evening">🌆 Вечер</button>
+          </div>
+          <div class="selected-counter" id="selected-counter-1">
+            <span class="counter-badge">Выбрано: <strong>0</strong></span>
+          </div>
+        </div>
+      </div>
+      
+      <div id="events-list" class="events-list">
+        <p style="text-align: center; color: rgba(255, 255, 255, 0.6);">Загрузка событий...</p>
+      </div>
+      <button id="generate-btn">✨ Сгенерировать маршруты</button>
+    </div>
+
+    <!-- СЦЕНАРИЙ 2 -->
+    <div id="scenario2" class="section" style="display: none;">
+      <h2>👥 Групповое планирование</h2>
+      <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: 24px;">
+        Добавьте участников — каждый будет выбирать события из одного общего списка.
+      </p>
+
+      <div class="add-member-section-compact">
+        <input type="text" id="member-name-input" placeholder="Имя участника" />
+        <button id="add-member-btn" class="action-btn-compact">+</button>
+      </div>
+
+      <div id="group-members" class="members-container-compact">
+        <p class="no-members-text">Нет участников. Добавьте первого участника, чтобы начать выбор событий.</p>
+      </div>
+
+      <!-- Фильтры и поиск для группы -->
+      <div class="filters-section" id="group-filters-section" style="display: none;">
+        <div class="search-wrapper">
+          <input type="text" id="search-input-2" class="search-input" placeholder="🔍 Поиск по названию события..." />
+        </div>
+        <div class="filters-row">
+          <div class="time-filters">
+            <button class="time-filter-btn active" data-time="all">Все</button>
+            <button class="time-filter-btn" data-time="morning">🌅 Утро</button>
+            <button class="time-filter-btn" data-time="day">☀️ День</button>
+            <button class="time-filter-btn" data-time="evening">🌆 Вечер</button>
+          </div>
+          <div class="selected-counter" id="selected-counter-2">
+            <span class="counter-badge">Выбрано: <strong>0</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="group-events-list" class="events-list" style="display: none;">
+        <p style="text-align: center; color: rgba(255, 255, 255, 0.6);">Загрузка событий...</p>
+      </div>
+
+      <button id="generate-group-btn" class="generate-btn" style="display: none;">🤝 Найти общий маршрут</button>
+    </div>
+
+    <!-- СЦЕНАРИЙ 3 -->
+    <div id="scenario3" class="section" style="display: none;">
+      <h2>🔄 Корректировка на лету</h2>
+      <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: 24px;">
+        Вы уже на фестивале? Добавьте новое событие — мы перестроим ваш маршрут!
+      </p>
+      
+      <div id="initial-route-section" style="margin-bottom: 24px;">
+        <h3 style="margin-bottom: 16px; color: var(--cyan);">📍 Создайте начальный маршрут:</h3>
+        <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 16px; font-size: 0.95rem;">
+          Выберите события для вашего начального маршрута, затем нажмите кнопку создания.
+        </p>
+        
+        <!-- Фильтры для начального маршрута -->
+        <div class="filters-section">
+          <div class="search-wrapper">
+            <input type="text" id="search-input-3-initial" class="search-input" placeholder="🔍 Поиск по названию события..." />
+          </div>
+          <div class="filters-row">
+            <div class="time-filters">
+              <button class="time-filter-btn active" data-time="all">Все</button>
+              <button class="time-filter-btn" data-time="morning">🌅 Утро</button>
+              <button class="time-filter-btn" data-time="day">☀️ День</button>
+              <button class="time-filter-btn" data-time="evening">🌆 Вечер</button>
+            </div>
+            <div class="selected-counter" id="selected-counter-3-initial">
+              <span class="counter-badge">Выбрано: <strong>0</strong></span>
+            </div>
+          </div>
+        </div>
+        
+        <div id="initial-events-list" class="events-list">
+          <p style="text-align: center; color: rgba(255, 255, 255, 0.6);">Загрузка событий...</p>
+        </div>
+        <button id="create-initial-route-btn" class="generate-btn" style="display: none;">✨ Создать начальный маршрут</button>
+      </div>
+
+      <div id="current-route-display" class="route-card" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="margin: 0; color: var(--cyan);">📍 Текущий маршрут:</h3>
+        </div>
+        <ul id="current-route-events" class="current-route-list">
+        </ul>
+      </div>
+
+      <div id="add-event-section" style="margin-top: 24px; display: none;">
+        <h4 style="margin-bottom: 16px; color: rgba(255, 255, 255, 0.9);">➕ Добавить новое событие к маршруту:</h4>
+        
+        <!-- Фильтры для добавления событий -->
+        <div class="filters-section">
+          <div class="search-wrapper">
+            <input type="text" id="search-input-3-add" class="search-input" placeholder="🔍 Поиск по названию события..." />
+          </div>
+          <div class="filters-row">
+            <div class="time-filters">
+              <button class="time-filter-btn active" data-time="all">Все</button>
+              <button class="time-filter-btn" data-time="morning">🌅 Утро</button>
+              <button class="time-filter-btn" data-time="day">☀️ День</button>
+              <button class="time-filter-btn" data-time="evening">🌆 Вечер</button>
+            </div>
+            <div class="selected-counter" id="selected-counter-3-add">
+              <span class="counter-badge">Выбрано: <strong>0</strong></span>
+            </div>
+          </div>
+        </div>
+        
+        <div id="add-events-list" class="events-list">
+          <p style="text-align: center; color: rgba(255, 255, 255, 0.6);">Загрузка событий...</p>
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 16px;">
+          <button id="rebuild-route-btn" class="generate-btn" style="display: none;">🔄 Перестроить маршрут</button>
+          <button id="reset-route-btn" class="action-btn" style="display: none;">🔄 Сбросить маршрут</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast уведомление -->
+    <div id="toast" class="toast">
+      <div class="toast-content">
+        <span class="toast-icon"></span>
+        <span class="toast-message"></span>
+      </div>
+    </div>
+
+    <!-- РЕЗУЛЬТАТ -->
+    <div id="routes-section" class="section" style="display: none;">
+      <h2>✅ Результат:</h2>
+      <div id="routes-container" class="routes-container"></div>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button id="back-btn">← Вернуться к выбору</button>
+        <button id="copy-route-btn" class="copy-btn" style="display: none;">📋 Копировать маршрут</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
